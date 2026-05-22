@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace App\Web\Documentation;
 
-use function Tempest\Support\Filesystem\exists;
-use function Tempest\Support\Filesystem\is_symbolic_link;
-use function Tempest\Support\Filesystem\is_file;
-use function Tempest\Support\Filesystem\delete_file;
-use function Tempest\Support\Filesystem\create_directory_for_file;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 use Tempest\Console\Console;
@@ -17,6 +12,11 @@ use Tempest\Console\ExitCode;
 use Tempest\Support\Filesystem;
 
 use function Tempest\root_path;
+use function Tempest\Support\Filesystem\create_directory_for_file;
+use function Tempest\Support\Filesystem\delete_file;
+use function Tempest\Support\Filesystem\exists;
+use function Tempest\Support\Filesystem\is_file;
+use function Tempest\Support\Filesystem\is_symbolic_link;
 
 final readonly class SymlinkDocumentationCommand
 {
@@ -42,7 +42,7 @@ final readonly class SymlinkDocumentationCommand
         if (is_symbolic_link($to) || is_file($to)) {
             $this->console->task(
                 label: "Removing existing symlink at {$to}.",
-                handler: fn () => delete_file($to),
+                handler: static fn () => delete_file($to),
             );
         }
 

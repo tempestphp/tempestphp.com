@@ -25,9 +25,7 @@ final class AlertBlockParser implements BlockContinueParserInterface
     }
 
     #[Override]
-    public function addLine(string $line): void
-    {
-    }
+    public function addLine(string $line): void {}
 
     #[Override]
     public function getBlock(): AbstractBlock

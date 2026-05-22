@@ -6,6 +6,7 @@ namespace App\Advocacy\Reddit;
 
 use App\Advocacy\Message;
 
+// @mago-expect lint:cyclomatic-complexity
 final class RedditMessageFactory
 {
     public function fromRedditItem(array $item, array $keywords): ?Message

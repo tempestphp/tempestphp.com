@@ -17,7 +17,9 @@ use function Tempest\Support\Str\to_kebab_case;
 
 final readonly class AttributeParser implements InlineParserInterface
 {
-    public function __construct(private Version $version) {}
+    public function __construct(
+        private Version $version,
+    ) {}
 
     #[Override]
     public function getMatchDefinition(): InlineParserMatch

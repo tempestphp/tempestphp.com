@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Advocacy\Reddit\RedditConfig;
+
 use function Tempest\env;
 
 return new RedditConfig(

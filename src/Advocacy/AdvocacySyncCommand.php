@@ -21,11 +21,11 @@ final readonly class AdvocacySyncCommand
     ) {}
 
     #[ConsoleCommand, Schedule(Every::HALF_HOUR)]
-    public function __invoke(bool $sync = true): void
+    public function __invoke(bool $sync = true): void // @mage-expect lint:no-boolean-flag-parameter
     {
         $messages = $this->reddit->fetch();
 
-//        $messages = [new Message('1', 'Test', ['tempest'], 'https://tempestphp.com')];
+        //        $messages = [new Message('1', 'Test', ['tempest'], 'https://tempestphp.com')];
 
         foreach ($messages as $message) {
             if ($sync) {

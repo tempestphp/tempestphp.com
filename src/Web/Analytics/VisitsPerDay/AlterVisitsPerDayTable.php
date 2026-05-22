@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Web\Analytics\VisitsPerDay;
 
-use Tempest\Database\MigratesUp;
 use Override;
+use Tempest\Database\MigratesUp;
 use Tempest\Database\QueryStatement;
 use Tempest\Database\QueryStatements\AlterTableStatement;
 

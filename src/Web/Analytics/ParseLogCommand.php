@@ -79,7 +79,7 @@ final class ParseLogCommand
         $handle = fopen($this->config->accessLogPath, 'r');
         $now = $this->clock->now();
 
-        $this->success(sprintf("Parsing <style=\"underline\">%s</style>", $this->config->accessLogPath));
+        $this->success(sprintf('Parsing <style="underline">%s</style>', $this->config->accessLogPath));
 
         // Resolve the last stored date
         $lastDate = StoredEvent::select()
@@ -93,7 +93,7 @@ final class ParseLogCommand
             $line = str(fgets($handle) ?: '')->trim();
 
             if ($line->isEmpty()) {
-                usleep(100000);
+                usleep(100_000);
                 fseek($handle, ftell($handle));
                 continue;
             }
@@ -156,7 +156,7 @@ final class ParseLogCommand
             if ($previousDateForIp && $previousDateForIp->diff($event->visitedAt)->s < 1) {
                 self::$ips[$event->ip] = $event->visitedAt;
 
-                $this->writeln(sprintf("<style=\"bg-red fg-white\"><%s </style> %s (throttled)", $date->format('Y-m-d H:i:s'), $event->url));
+                $this->writeln(sprintf('<style="bg-red fg-white"><%s </style> %s (throttled)', $date->format('Y-m-d H:i:s'), $event->url));
 
                 continue;
             }
@@ -165,7 +165,7 @@ final class ParseLogCommand
 
             self::$ips[$event->ip] = $event->visitedAt;
 
-            $this->writeln(sprintf("<style=\"bg-blue fg-white\"><%s </style> %s", $date->format('Y-m-d H:i:s'), $event->url));
+            $this->writeln(sprintf('<style="bg-blue fg-white"><%s </style> %s', $date->format('Y-m-d H:i:s'), $event->url));
         }
     }
 }

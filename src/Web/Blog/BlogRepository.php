@@ -39,11 +39,11 @@ final readonly class BlogRepository
                     ...YamlFrontMatter::parse(file_get_contents($path))->matter(),
                 ];
 
-                if (isset($data['tag'])) {
+                if ($data['tag'] ?? null) {
                     $data['tag'] = strtolower($data['tag']);
                 }
 
-                if (isset($data['author'])) {
+                if ($data['author'] ?? null) {
                     $data['author'] = strtolower($data['author']);
                 }
 

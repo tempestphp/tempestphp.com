@@ -16,7 +16,7 @@ final class Message
                 to: 20,
                 asArray: true,
             )
-            ->map(fn (string $line) => "> " . $line)
+            ->map(static fn (string $line) => '> ' . $line)
             ->implode(PHP_EOL)
             ->toString();
     }

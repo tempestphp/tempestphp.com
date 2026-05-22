@@ -19,7 +19,9 @@ use function Tempest\Support\str;
 
 final readonly class FunctionParser implements InlineParserInterface
 {
-    public function __construct(private Version $version) {}
+    public function __construct(
+        private Version $version,
+    ) {}
 
     #[Override]
     public function getMatchDefinition(): InlineParserMatch

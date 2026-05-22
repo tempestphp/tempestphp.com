@@ -14,7 +14,8 @@ final readonly class Reddit
         private RedditConfig $config,
         private RedditApi $api,
         private RedditMessageFactory $messageFactory,
-        #[Tag('advocacy')] private Cache $cache,
+        #[Tag('advocacy')]
+        private Cache $cache,
     ) {}
 
     /** @return Message[] */

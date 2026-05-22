@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Web\Documentation;
 
 use Override;
-use Tempest\Core\Priority;
 use Tempest\Http\Request;
 use Tempest\Http\Response;
 use Tempest\Http\Responses\Redirect;
@@ -13,6 +12,7 @@ use Tempest\Router\HttpMiddleware;
 use Tempest\Router\HttpMiddlewareCallable;
 use Tempest\Router\MatchedRoute;
 use Tempest\Router\Router;
+use Tempest\Support\Priority;
 
 use function Tempest\Router\uri;
 use function Tempest\Support\Arr\get_by_key;

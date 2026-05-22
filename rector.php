@@ -10,7 +10,7 @@ return RectorConfig::configure()
         __DIR__ . '/src',
         __DIR__ . '/tests',
     ])
-    ->withSets([TempestSetList::TEMPEST_30])
+    ->withSets([TempestSetList::TEMPEST_310])
     // ->withPhpSets()
     ->withTypeCoverageLevel(0)
     ->withDeadCodeLevel(0)

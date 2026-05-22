@@ -61,13 +61,14 @@ final readonly class CodeController
         $editUrl = uri([self::class, 'paste'], lang: $language, code: $code);
         $cleanUrl = uri([self::class, 'preview'], lang: $language, code: $code, center: $center, clean: true);
 
-        return \Tempest\View\view(__DIR__ . '/code_preview.view.php')->data(
-            code: $highlightedCode,
-            editUrl: $editUrl,
-            language: $language,
-            center: $center,
-            clean: $clean,
-            cleanUrl: $cleanUrl,
-        );
+        return \Tempest\View\view(__DIR__ . '/code_preview.view.php')
+            ->data(
+                code: $highlightedCode,
+                editUrl: $editUrl,
+                language: $language,
+                center: $center,
+                clean: $clean,
+                cleanUrl: $cleanUrl,
+            );
     }
 }

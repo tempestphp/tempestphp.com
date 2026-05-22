@@ -21,9 +21,7 @@ enum Version: string
 
     public function isNext(): bool
     {
-        return match ($this) {
-            default => false,
-        };
+        return match ($this) { default => false };
     }
 
     public function getBranch(): string

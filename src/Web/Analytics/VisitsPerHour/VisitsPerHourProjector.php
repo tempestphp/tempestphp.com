@@ -9,6 +9,7 @@ use App\Web\Analytics\PageVisited;
 use Override;
 use Tempest\Database\Builder\QueryBuilders\QueryBuilder;
 use Tempest\EventBus\EventHandler;
+
 use function Tempest\Intl\Number\parse_int;
 
 final readonly class VisitsPerHourProjector implements Projector

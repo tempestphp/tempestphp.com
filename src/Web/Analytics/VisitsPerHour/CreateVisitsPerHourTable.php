@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Web\Analytics\VisitsPerHour;
 
-use Tempest\Database\MigratesUp;
-use Tempest\Database\MigratesDown;
 use Override;
+use Tempest\Database\MigratesDown;
+use Tempest\Database\MigratesUp;
 use Tempest\Database\QueryStatement;
 use Tempest\Database\QueryStatements\CreateTableStatement;
 use Tempest\Database\QueryStatements\DropTableStatement;
