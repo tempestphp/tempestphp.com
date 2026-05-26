@@ -69,7 +69,7 @@
 .hl-type {
 	color: var(--code-type);
 }
-.hl-generic {
+.hl-generic, .hl-generic .hl-property {
 	color: var(--code-generic);
 }
 .hl-value {
