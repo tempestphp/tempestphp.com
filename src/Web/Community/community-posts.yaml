@@ -1,3 +1,7 @@
+- uri: https://www.juststeveking.com/articles/the-reason-i-love-tempest-for-apis/
+  title: The Reason I Love Tempest for APIs
+  description: Tempest makes API development feel lightweight by combining typed request objects, attribute-based validation, discovery-driven routing, and built-in mapping with minimal ceremony.
+  type: Blog
 - uri: https://packagist.org/packages/laylatichy/tempest-debug-bar
   title: "Tempest debug bar"
   description: A PHP Debug Bar implementation for Tempest
