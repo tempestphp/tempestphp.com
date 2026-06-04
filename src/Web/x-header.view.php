@@ -22,7 +22,7 @@ $isBlog = is_current_uri([BlogController::class, 'show']) || is_current_uri([Blo
         <a href="/" class="flex items-center gap-4">
           <!-- Logo -->
           <div class="size-8">
-            <img src="/img/tempest-logo.svg" alt="Tempest logo" class="size-full"/>
+            <img src="/img/tempest-logo.png" alt="Tempest logo" class="size-full"/>
           </div>
           <span class="hidden lg:inline font-medium">Tempest</span>
         </a>

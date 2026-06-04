@@ -1,4 +1,4 @@
-```console ">_ ./tempest static:generate"
+```console >_ ./tempest static:generate
 /framework/01-getting-started <dim>..</dim> <em>/public/framework/01-getting-started/index.html</em>
 /framework/02-the-container <dim>......</dim> <em>/public/framework/02-the-container/index.html</em>
 /framework/03-controllers <dim>..........</dim> <em>/public/framework/03-controllers/index.html</em>

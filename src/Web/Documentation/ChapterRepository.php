@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Web\Documentation;
 
 use App\Support\HasMemoization;
-use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
-use League\CommonMark\MarkdownConverter;
 use RuntimeException;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Tempest\Markdown\Markdown;
 use Tempest\Support\Arr\ImmutableArray;
 
 use function Tempest\root_path;
@@ -23,7 +22,7 @@ final class ChapterRepository
     use HasMemoization;
 
     public function __construct(
-        private readonly MarkdownConverter $markdown,
+        private readonly Markdown $markdown,
     ) {}
 
     public function find(Version $version, string $category, string $slug): ?Chapter
@@ -46,13 +45,9 @@ final class ChapterRepository
         }
 
         $raw = file_get_contents($path);
-        $markdown = $this->markdown->convert($raw);
+        $markdown = $this->markdown->parse($raw);
 
-        if (! $markdown instanceof RenderedContentWithFrontMatter) {
-            throw new RuntimeException(sprintf('Documentation entry [%s] is missing a frontmatter.', $path));
-        }
-
-        $frontmatter = $markdown->getFrontMatter();
+        $frontmatter = $markdown->frontmatter;
         $title = get_by_key($frontmatter, 'title');
         $description = get_by_key($frontmatter, 'description');
         $hidden = get_by_key($frontmatter, 'hidden');
@@ -61,7 +56,7 @@ final class ChapterRepository
             version: $version,
             category: $category,
             slug: $slug,
-            body: $markdown->getContent(),
+            body: $markdown->html,
             raw: $raw,
             title: $title,
             path: to_relative_path(root_path(), $path),

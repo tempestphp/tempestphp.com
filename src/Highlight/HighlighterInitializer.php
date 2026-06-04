@@ -9,6 +9,7 @@ use Tempest\Container\Container;
 use Tempest\Container\Initializer;
 use Tempest\Container\Singleton;
 use Tempest\Highlight\Highlighter;
+use Tempest\Highlight\Languages\Php\PhpLanguage;
 use Tempest\Highlight\Themes\CssTheme;
 
 final readonly class HighlighterInitializer implements Initializer
@@ -17,7 +18,10 @@ final readonly class HighlighterInitializer implements Initializer
     #[Singleton(tag: 'project')]
     public function initialize(Container $container): Highlighter
     {
-        $highlighter = new Highlighter(new CssTheme());
+        $highlighter = new Highlighter(
+            theme: new CssTheme(),
+            fallbackLanguage: new PhpLanguage(),
+        );
 
         $highlighter
             ->addLanguage(new TempestViewLanguage())
