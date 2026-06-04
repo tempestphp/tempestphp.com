@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19ac38bba0356db9fd18dd26cfaa5060",
+    "content-hash": "91698b6daf8b0c79f9004cda235eb3e3",
     "packages": [
         {
             "name": "assertchris/ellison",
@@ -5047,23 +5047,23 @@
         },
         {
             "name": "tempest/markdown",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tempestphp/markdown.git",
-                "reference": "ecc6d966bb0f82f86df6d41403c96309565cb96f"
+                "reference": "ecacdb106ef5672de1a5f2dfbf6534c1f842fb0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tempestphp/markdown/zipball/ecc6d966bb0f82f86df6d41403c96309565cb96f",
-                "reference": "ecc6d966bb0f82f86df6d41403c96309565cb96f",
+                "url": "https://api.github.com/repos/tempestphp/markdown/zipball/ecacdb106ef5672de1a5f2dfbf6534c1f842fb0d",
+                "reference": "ecacdb106ef5672de1a5f2dfbf6534c1f842fb0d",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.5",
                 "symfony/yaml": "^8.0",
                 "tempest/highlight": "^2.23.1",
-                "tempest/responsive-image": "dev-main"
+                "tempest/responsive-image": "^1.0"
             },
             "require-dev": {
                 "carthage-software/mago": "1.16.0",
@@ -5093,7 +5093,7 @@
             "description": "Fast and extensible Markdown in PHP",
             "support": {
                 "issues": "https://github.com/tempestphp/markdown/issues",
-                "source": "https://github.com/tempestphp/markdown/tree/1.0.0"
+                "source": "https://github.com/tempestphp/markdown/tree/1.0.1"
             },
             "funding": [
                 {
@@ -5101,11 +5101,11 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-04T08:09:44+00:00"
+            "time": "2026-06-04T09:32:49+00:00"
         },
         {
             "name": "tempest/responsive-image",
-            "version": "dev-main",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tempestphp/responsive-image.git",
@@ -5128,7 +5128,6 @@
                 "tempest/command-bus": "^3.11",
                 "tempest/debug": "^3.11"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5148,7 +5147,7 @@
             "description": "Server-side responsive images with PHP",
             "support": {
                 "issues": "https://github.com/tempestphp/responsive-image/issues",
-                "source": "https://github.com/tempestphp/responsive-image/tree/main"
+                "source": "https://github.com/tempestphp/responsive-image/tree/1.0.0"
             },
             "funding": [
                 {
