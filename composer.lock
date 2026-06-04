@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c43d6cf747b6e574f8f3c0ef3fccf9e4",
+    "content-hash": "19ac38bba0356db9fd18dd26cfaa5060",
     "packages": [
         {
             "name": "assertchris/ellison",
@@ -5047,7 +5047,7 @@
         },
         {
             "name": "tempest/markdown",
-            "version": "dev-main",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tempestphp/markdown.git",
@@ -5074,7 +5074,6 @@
                 "phpunit/phpunit": "^12.0",
                 "tempest/debug": "^3.10"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -5094,7 +5093,7 @@
             "description": "Fast and extensible Markdown in PHP",
             "support": {
                 "issues": "https://github.com/tempestphp/markdown/issues",
-                "source": "https://github.com/tempestphp/markdown/tree/main"
+                "source": "https://github.com/tempestphp/markdown/tree/1.0.0"
             },
             "funding": [
                 {
@@ -7005,9 +7004,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "tempest/markdown": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {},
