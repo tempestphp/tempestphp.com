@@ -3,6 +3,7 @@
 namespace App\Markdown\Extensions\Lists;
 
 use App\Markdown\Extensions\GitHubLink\GitHubLinkRule;
+use App\Markdown\Extensions\Link\LinkRule;
 use App\Web\Documentation\Version;
 use Tempest\Markdown\Parser;
 use Tempest\Markdown\Rules\BoldAndItalicRule;
@@ -10,7 +11,6 @@ use Tempest\Markdown\Rules\BoldRule;
 use Tempest\Markdown\Rules\CodeRule;
 use Tempest\Markdown\Rules\ImageRule;
 use Tempest\Markdown\Rules\ItalicRule;
-use Tempest\Markdown\Rules\LinkRule;
 use Tempest\Markdown\Rules\TextRule;
 use Tempest\Markdown\Token;
 

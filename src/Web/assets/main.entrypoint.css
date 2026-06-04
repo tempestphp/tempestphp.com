@@ -277,20 +277,36 @@ pre {
 |--------------------------------------------------------------------------
 */
 
-.home .code-block {
-	@apply flex flex-col gap-y-0 p-0.5 rounded-xl border border-(--ui-border)
-		bg-(--ui-bg-elevated)/50 overflow-hidden;
+.home .home-code-block {
+	& + .home-code-block {
+		margin-top: 1em;
+	}
 
-	&.named-code-block {
-		.code-block-name {
-			@apply mb-1.5 mt-1 px-2 font-mono text-(--ui-text-dimmed) text-sm;
+	& .code-title {
+		margin-bottom: 0;
+		margin-left: 1.1em;
+		font-size: 1em;
+		color: var(--ui-text-muted);
+		background: var(--code-border);
+		padding: 0em 0.5em;
+		display: flex;
+		float: left;
+		border-radius: 0.2em 0.2em 0 0;
+
+		& + pre {
+			margin-top: 0;
 		}
 	}
 
-	pre {
-		@apply border border-(--ui-border) rounded-[0.6rem] p-4 my-0
-			bg-(--ui-bg-elevated)/50 overflow-x-auto;
-		tab-size: 2;
+	& pre {
+		background-color: #ffffffdd;
+		border-radius: 3px;
+		display: block;
+		clear:both;
+		padding: 1em 2ch;
+		box-shadow: 0 0 15px 5px var(--ui-border);
+		overflow-x: auto;
+		line-height: 1.8em;
 	}
 }
 

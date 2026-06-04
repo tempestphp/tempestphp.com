@@ -7,10 +7,8 @@ namespace App\Web\Blog;
 use App\Web\CommandPalette\Command;
 use App\Web\CommandPalette\Indexer;
 use App\Web\CommandPalette\Type;
-use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
-use League\CommonMark\MarkdownConverter;
 use Override;
-use RuntimeException;
+use Tempest\Markdown\Markdown;
 use Tempest\Support\Arr\ImmutableArray;
 
 use function Tempest\Router\uri;
@@ -21,7 +19,7 @@ use function Tempest\Support\Arr\wrap;
 final readonly class BlogIndexer implements Indexer
 {
     public function __construct(
-        private MarkdownConverter $markdown,
+        private Markdown $markdown,
     ) {}
 
     #[Override]
@@ -29,14 +27,10 @@ final readonly class BlogIndexer implements Indexer
     {
         return arr(glob(__DIR__ . '/articles/*.md'))
             ->map(function (string $path) {
-                $markdown = $this->markdown->convert(file_get_contents($path));
+                $parsed = $this->markdown->parse(file_get_contents($path));
                 preg_match('/\d+-\d+-\d+-(?<slug>.*)\.md/', $path, $matches);
 
-                if (! $markdown instanceof RenderedContentWithFrontMatter) {
-                    throw new RuntimeException(sprintf('Blog entry [%s] is missing a frontmatter.', $path));
-                }
-
-                $frontmatter = $markdown->getFrontMatter();
+                $frontmatter = $parsed->frontmatter;
                 $title = get_by_key($frontmatter, 'title');
                 $author = get_by_key($frontmatter, 'author');
                 $description = get_by_key($frontmatter, 'description');
@@ -44,14 +38,14 @@ final readonly class BlogIndexer implements Indexer
                 $tags = get_by_key($frontmatter, 'tag');
 
                 return new Command(
-                    type: Type::URI,
                     title: $title,
-                    uri: uri([BlogController::class, 'show'], slug: $matches['slug']),
+                    type: Type::URI,
                     hierarchy: [
                         'Blog',
                         Author::tryFrom($author)?->getName() ?? 'Tempest',
                         $title,
                     ],
+                    uri: uri([BlogController::class, 'show'], slug: $matches['slug']),
                     fields: [
                         $author,
                         $description,
