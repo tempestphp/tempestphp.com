@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Web\Blog;
 
 use DateTimeImmutable;
-use Exception;
-use League\CommonMark\Extension\FrontMatter\Output\RenderedContentWithFrontMatter;
-use League\CommonMark\MarkdownConverter;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Tempest\Markdown\Markdown;
+use Tempest\Markdown\ParsedMarkdown;
 use Tempest\Support\Arr\ImmutableArray;
 
 use function Tempest\Mapper\map;
@@ -17,7 +16,7 @@ use function Tempest\Support\arr;
 final readonly class BlogRepository
 {
     public function __construct(
-        private MarkdownConverter $markdown,
+        private Markdown $markdown,
     ) {}
 
     /**
@@ -48,7 +47,7 @@ final readonly class BlogRepository
                 }
 
                 if ($loadContent) {
-                    $data['content'] = $this->parseContent($path)->getContent();
+                    $data['content'] = $this->parseContent($path)->html;
                 }
 
                 return $data;
@@ -69,9 +68,9 @@ final readonly class BlogRepository
 
         $data = [
             'slug' => $slug,
-            'content' => $content->getContent(),
+            'content' => $content->html,
             'createdAt' => $this->parseDate($path),
-            ...$content->getFrontMatter(),
+            ...$content->frontmatter,
         ];
 
         if (isset($data['tag'])) {
@@ -85,7 +84,7 @@ final readonly class BlogRepository
         return map($data)->to(BlogPost::class);
     }
 
-    private function parseContent(string $path): ?RenderedContentWithFrontMatter
+    private function parseContent(string $path): ?ParsedMarkdown
     {
         $content = @file_get_contents($path); // @mago-expect lint:no-error-control-operator
 
@@ -93,13 +92,7 @@ final readonly class BlogRepository
             return null;
         }
 
-        $parsed = $this->markdown->convert($content);
-
-        if (! $parsed instanceof RenderedContentWithFrontMatter) {
-            throw new Exception("Missing frontmatter or content in {$path}");
-        }
-
-        return $parsed;
+        return $this->markdown->parse($content);
     }
 
     private function parseDate(string $path): DateTimeImmutable
