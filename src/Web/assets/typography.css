@@ -22,7 +22,7 @@
 
 		@apply my-0 text-sm opacity-90;
 
-		@apply my-4 relative overflow-hidden w-full rounded-md p-4 flex gap-2.5
+		@apply my-4 relative overflow-hidden w-full rounded-md p-4
 			items-start text-(--ui-text-highlighted) bg-(--ui-bg-elevated)/50 ring
 			ring-inset ring-(--ui-border);
 	}
