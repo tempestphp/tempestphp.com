@@ -15,53 +15,31 @@
 		@apply mt-0!;
 	}
 
-	.alert {
+	div.warning, div.info, div.success {
 		& code {
 			font-size: 0.9em;
 		}
 
+		@apply my-0 text-sm opacity-90;
+
 		@apply my-4 relative overflow-hidden w-full rounded-md p-4 flex gap-2.5
 			items-start text-(--ui-text-highlighted) bg-(--ui-bg-elevated)/50 ring
 			ring-inset ring-(--ui-border);
+	}
 
-		&.alert-warning {
-			@apply bg-(--ui-warning)/10 text-(--ui-warning) ring-(--ui-warning)/25
-				[--tw-prose-links:var(--ui-warning)];
-		}
+	div.warning {
+		@apply bg-(--ui-warning)/10 text-(--ui-warning) ring-(--ui-warning)/25
+		[--tw-prose-links:var(--ui-warning)];
+	}
 
-		&.alert-success {
-			@apply bg-(--ui-success)/10 text-(--ui-success) ring-(--ui-success)/25
-				[--tw-prose-links:var(--ui-success)];
-		}
+	div.info {
+		@apply bg-(--ui-info)/5 text-(--ui-info) ring-(--ui-info)/25
+		[--tw-prose-links:var(--ui-info)];
+	}
 
-		&.alert-info {
-			@apply bg-(--ui-info)/5 text-(--ui-info) ring-(--ui-info)/25
-				[--tw-prose-links:var(--ui-info)];
-		}
-
-		div.alert-wrapper {
-			@apply flex gap-x-2;
-
-			.alert-icon-wrapper {
-				@apply shrink-0;
-
-				svg {
-					@apply size-5;
-				}
-			}
-
-			.alert-content {
-				@apply flex flex-col gap-y-2;
-
-				.alert-title {
-					@apply text-sm inline-block;
-				}
-
-				p {
-					@apply my-0 text-sm opacity-90;
-				}
-			}
-		}
+	div.success {
+		@apply bg-(--ui-success)/10 text-(--ui-success) ring-(--ui-success)/25
+		[--tw-prose-links:var(--ui-success)];
 	}
 
 	.code-block {
