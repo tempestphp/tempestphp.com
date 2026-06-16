@@ -98,7 +98,7 @@ I’ve been using generics through PHPStan in pretty much all my code for as lon
 
 ## From Brent, developer advocate for PHP at JetBrains
 
-Believe it or not, but I'm not super bothered that the latest RFC is failing. I would have liked it to pass, but generics won't make a difference in the big scheme of things. That "big scheme of things" is much more important, and if anything, the generics RFC put a spotlights on how PHP is failing in this regard.
+Believe it or not, but I'm not super bothered that the latest RFC is failing. I would have liked it to pass, but generics won't make a difference in the big scheme of things. That "big scheme of things" is much more important, and if anything, the generics RFC put a spotlight on how PHP is failing in this regard.
 
 Whether people want it or not, PHP is more than just an interpreter, it's more than its syntax. The reason PHP is where it is today is not because of how beautiful or not the language is; but because of the richness of its ecosystem. PHP is more than a programming language, and without its ecosystem of frameworks, packages, and tooling, I doubt it would still be around.
 
