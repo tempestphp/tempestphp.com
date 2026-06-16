@@ -44,7 +44,7 @@ final readonly class MetaImageController
             return new Ok($html);
         }
 
-        $path = path($this->kernel->root, 'public/meta/meta-blog-' . $slug . '.png');
+        $path = path($this->kernel->root, 'public/meta/meta-blog-' . $slug . '.png')->toString();
 
         if (! is_dir(dirname($path))) {
             mkdir(dirname($path), recursive: true);
@@ -72,7 +72,7 @@ final readonly class MetaImageController
             return new Ok($html);
         }
 
-        $path = path($this->kernel->root, "public/meta/meta-documentation-{$version->value}-{$category}-{$slug}.png");
+        $path = path($this->kernel->root, "public/meta/meta-documentation-{$version->value}-{$category}-{$slug}.png")->toString();
 
         if (! is_dir(dirname($path))) {
             mkdir(dirname($path), recursive: true);
@@ -99,7 +99,7 @@ final readonly class MetaImageController
             return new Ok($html);
         }
 
-        $path = path($this->kernel->root, 'public/meta/meta-' . $type->value . '.png');
+        $path = path($this->kernel->root, 'public/meta/meta-' . $type->value . '.png')->toString();
 
         if (! is_dir(dirname($path))) {
             mkdir(dirname($path), recursive: true);
