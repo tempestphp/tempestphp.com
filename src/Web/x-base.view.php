@@ -41,7 +41,7 @@ use function Tempest\Router\uri;
     <!-- Meta image -->
     <?php $metaImageUri ??= ($metaType ?? \App\Web\Meta\MetaType::HOME)->uri(); ?>
     <meta property="og:image" :content="$metaImageUri"/>
-    <meta property="twitter:image" :content="$metaImageUri"/>
+    <meta name="twitter:image" :content="$metaImageUri"/>
     <meta name="image" :content="$metaImageUri"/>
     <meta name="twitter:card" content="summary_large_image"/>
     <meta property="og:type" content="article">
