@@ -5,7 +5,7 @@ tag: thoughts
 author: brent
 ---
 
-PHP isn't getting generics. I guess there's nothing new under the sun, and I probably shouldn't be surprised with the latest RFC vote failing. The main argument for internals to vote "no" is because they hope they can still shove in generic type checking at runtime, even though [previous experiments and testing](https://github.com/PHPGenerics/php-generics-rfc/issues/45) have shown that neither reified nor monomorphized generics would work.
+PHP isn't getting generics. I guess there's nothing new under the sun, and I probably shouldn't be surprised with the latest RFC vote failing. The main argument for internals to vote "no" is because they hope they can still add generic type checking during runtime, even though [previous experiments and testing](https://github.com/PHPGenerics/php-generics-rfc/issues/45) have shown that neither reified nor monomorphized generics would work.
 
 On top of that, the actual target audience for generics — professional developers that rely on static analysis for their day-to-day software development — they have already been using generics via docblocks for a decade. They have proven that statically checked types are a viable approach.
 
@@ -65,14 +65,23 @@ I asked Azjezz if he wanted to pitch in, being the author of the RFC. He told me
 > <br/><br/>
 > That cost compounds through the dependency graph. If Psl (or Symfony, PHPUnit, Laravel, Doctrine..etc) ships with native generics under a reified model, every downstream application pays the cost, even apps that never declared a generic of their own. Apply that to CI tooling, and a 10-minutes CI run becomes a 15 to 20-minutes CI run across the entire ecosystem. That's not a number people vote yes on either.
 
-## From Brent — developer advocate for PHP
+On the question of why Azjezz opened voting on his RFC early without further exploring the option of adding reidied generics on top of it, he says this:
 
-I've talked about generics in PHP for years. I've made videos, I've written blog posts, I've argued countless times. I write PHP every day. My fellow developers have done a better job in this blog post than I ever could to explaining the technical pros and cons. So let me approach it from another angle.
+> And honestly: I'm not going to spend my time on reified generics, because the way I see it, they're not going to happen. Not because I don't want them, I do. Making them performant enough to actually ship in PHP requires structural engine changes that I have neither the time, the freedom, nor the mandate to do. I'm one person working on this in my own time, between other commitments. Asking me to rewrite the PHP engine to make reified generics viable, and to break things in the process, isn't a realistic ask. And shipping a reified RFC without that rewrite gets us exactly where Rob's branch already is: a working implementation with a perf profile the community won't accept.
+> <br><br>
+> …
+> <br><br>
+> If reified generics ever become viable in PHP, it'll be because someone with the time, the resources, and the engine-level mandate makes that path exist. I'd happily support a follow-up RFC the moment that's the case. Until then, "is the static-analysis convergence worth shipping bound-erased generics?" is the actual question on the ballot.
 
-Whether people want it or not, PHP has become more than just an interpreter. It has become more than "the syntax". The reason PHP is where it is today is not because of how beautiful the language is (I wouldn't say it is particularly beautiful); but because of the richness of its ecosystem. PHP has become more than the language itself. Without the ecosystem of frameworks, packages, and tooling, there would be no PHP anymore.
 
-Meanwhile, there's a group of around 100 people deciding on the future of the language (technically there are around 2000 people eligible to vote, but most don't bother anymore, mind blowing as that is).
+## From Brent, developer advocate for PHP
 
-I don't feel represented by that group. I know many, _many_ people in the PHP ecosystem feel the same way. Even the PHP Foundation — which is financially backed by the people and companies that make PHP great — even the Foundation is at the mercy of a group of people who apparently have a vision for the language that I don't share.
+Believe it or not, but I'm not super bothered that the latest RFC is failing. I would have liked it to pass, but generics won't make a difference in the big scheme of things. That "big scheme of things" is much more important, and if anything, the generics RFC put a spotlights on how PHP is failing in this regard.
 
-To me, the generic RFC fail embodies this failure more than anything else.
+Whether people want it or not, PHP is more than just an interpreter. It's more than "the syntax". The reason PHP is where it is today is not because of how beautiful or not the language is; but because of the richness of its ecosystem. PHP is more than a programming language, and without its ecosystem of frameworks, packages, and tooling, I doubt it would still be around.
+
+Meanwhile, there's a group of around 100 people deciding on the future of the language (technically there are around 2000 people eligible to vote, but most don't bother anymore, mind-blowing as that is). There's no leader or entity setting out a vision, and the group themselves is heavily divided; for example spending weeks debating whether a link to X should or shouldn't be removed from their website. 
+
+Some say the lack of a unified vision and direction for PHP is what makes it great, but I say it's holding PHP back significantly. Which company that isn't already using PHP would choose a language whose design isn't owned by anyone? Where the only paid entity can be blocked of progress at any time when a small group of people decides against it? A group that has barely any representation from the biggest ecosystems that actually drive PHP like Laravel, Symfony, WordPress, or Packagist?  
+
+To me, this is the failure highlighted by the generics RFC, and by so many RFCs besides it. Some people have tried to change the system in the past, to no avail. The committee seems fine where it is and doesn't want the process to change. 
