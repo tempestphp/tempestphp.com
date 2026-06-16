@@ -5,15 +5,28 @@ tag: thoughts
 author: brent
 ---
 
-PHP isn't getting generics. I guess there's nothing new under the sun, and I probably shouldn't be surprised with the latest RFC vote failing. The main argument for internals to vote "no" is because they hope they can still add generic type checking during runtime, even though [previous experiments and testing](https://github.com/PHPGenerics/php-generics-rfc/issues/45) have shown that neither reified nor monomorphized generics would work.
+Most likely, PHP isn't getting generics. There's nothing new under the sun. Some internals have written very elaborate blog posts on why runtime-erased generics are a bad idea, and why they are [voting no on the current RFC](https://wiki.php.net/rfc/bound_erased_generic_types#vote).
 
-On top of that, the actual target audience for generics — professional developers that rely on static analysis for their day-to-day software development — they have already been using generics via docblocks for a decade. They have proven that statically checked types are a viable approach.
+However, there's another side of the PHP community that are very much in favor of this RFC, who also wants to voice their opinion. Some of them don't have the platform to do so themselves, which is why I want to give the other side of the story a voice, here on this page. These are the stories and comments from PHP developers who use generics in real life and have embraced static analysis as a core part of PHP. They'd like to share their thoughts.
 
-Today I want to give a platform to some of those developers to share their thoughts. These are the people writing PHP day-by-day to build real solutions for real problems. I want their voice to be heard.
+- [Nicolas Grekas](#from-nicolas,-core-maintainer-of-symfony)
+- [Márk Magyar](#from-márk,-tempest-core-developer-and-full-time-php-dev)
+- [Azjezz](#from-azjezz,-the-rfc-author)
+- [Nuno Maduro](#from-nuno,-staff-software-engineer-at-laravel)
+- [Brent Roose](#from-brent,-developer-advocate-for-php-at-jetbrains)
+- [You?](#and-how-about-you?)
 
 ---
 
-## From Márk, core Tempest developer and full-time PHP dev
+## From Nicolas, core maintainer of Symfony
+
+There's extensively-documented prior research on generics in PHP. The conclusion is bold: the PHP engine can't efficiently implement generics (challenges are inference to not ruin DX, performance to not ruin costs and many others). The only practical solution is an ahead of time static analyser. Dreaming of one built into PHP itself, likely written in C, is fine but not realistic: PHP static analyzers were developed in PHP for a reason. This allowed fast iterations, by people focused on their proficiency language. Moving this experience to the engine-side would eject the very people that made SA in PHP a thing. That'd be a too big loss for the community. 
+
+Erased generics as proposed are a direct continuation on this path, which is already proved viable and useful. Thanks to IDEs, SA in PHP has a much wider user-base than just the active users of phpstan, psalm, et al. With LLMs generating code, it's even more critical for PHP to have a stronger verification step. SA tools are a mandatory part of the loop nowadays. We did already wait and dream for years about babysteps towards generics. Even generic arrays has been ruled out as too hard. We waited long enough to draw the conclusion: erased-generics are the only realistic step forward. I'd be happy to be wrong. Let's see in some years (if people/LLMs still write PHP then).
+
+---
+
+## From Márk, Tempest core developer and full-time PHP dev
 
 First and foremost, I need to tell you: I will be extremely disappointed if [this RFC](https://wiki.php.net/rfc/bound_erased_generic_types) doesn't pass. But let me start with the least controversial thing I can possibly say. **I've been writing generics in PHP for years, and so have you.**
 
@@ -57,6 +70,8 @@ Let me give the other side its due, because I don't think this RFC is flawless. 
 
 So no, I'm not surprised the vote is failing. I'm just tired of the shape of it. PHP can have generics. It already runs them, every day, in every framework you depend on. And it's refusing exactly those, to hold out for a version it has spent ten years proving it can't build. That's the tragedy. Not that the bird in the bush is hard to catch. That we keep letting go of the one in our hand just to stand there and stare at it. And honestly, that's just sad.
 
+---
+
 ## From Azjezz, the RFC author
 
 I asked Azjezz if he wanted to pitch in, being the author of the RFC. He told me he didn't have time to write an eloquent blog post, but he did want to contribute and allowed me to quote from a [recent Reddit comment](https://www.reddit.com/r/PHP/comments/1u5pr7v/comment/ornvi98/) in which he explains why he opened the vote even though it was likely to fail. Azjezz explains that the discussion changed from the RFC itself (which was about runtime ignored generics), to instead people wanting reified (runtime checked) generics. He explains: 
@@ -73,15 +88,32 @@ On the question of why Azjezz opened voting on his RFC early without further exp
 > <br><br>
 > If reified generics ever become viable in PHP, it'll be because someone with the time, the resources, and the engine-level mandate makes that path exist. I'd happily support a follow-up RFC the moment that's the case. Until then, "is the static-analysis convergence worth shipping bound-erased generics?" is the actual question on the ballot.
 
+---
 
-## From Brent, developer advocate for PHP
+## From Nuno, staff software engineer at Laravel
+
+I’ve been using generics through PHPStan in pretty much all my code for as long as PHPStan has been around. At this point, it feels like a must-have for any modern language. If PHP wants to keep moving in that direction, I think it needs generics.
+
+---
+
+## From Brent, developer advocate for PHP at JetBrains
 
 Believe it or not, but I'm not super bothered that the latest RFC is failing. I would have liked it to pass, but generics won't make a difference in the big scheme of things. That "big scheme of things" is much more important, and if anything, the generics RFC put a spotlights on how PHP is failing in this regard.
 
-Whether people want it or not, PHP is more than just an interpreter. It's more than "the syntax". The reason PHP is where it is today is not because of how beautiful or not the language is; but because of the richness of its ecosystem. PHP is more than a programming language, and without its ecosystem of frameworks, packages, and tooling, I doubt it would still be around.
+Whether people want it or not, PHP is more than just an interpreter, it's more than its syntax. The reason PHP is where it is today is not because of how beautiful or not the language is; but because of the richness of its ecosystem. PHP is more than a programming language, and without its ecosystem of frameworks, packages, and tooling, I doubt it would still be around.
 
 Meanwhile, there's a group of around 100 people deciding on the future of the language (technically there are around 2000 people eligible to vote, but most don't bother anymore, mind-blowing as that is). There's no leader or entity setting out a vision, and the group themselves is heavily divided; for example spending weeks debating whether a link to X should or shouldn't be removed from their website. 
 
 Some say the lack of a unified vision and direction for PHP is what makes it great, but I say it's holding PHP back significantly. Which company that isn't already using PHP would choose a language whose design isn't owned by anyone? Where the only paid entity can be blocked of progress at any time when a small group of people decides against it? A group that has barely any representation from the biggest ecosystems that actually drive PHP like Laravel, Symfony, WordPress, or Packagist?  
 
 To me, this is the failure highlighted by the generics RFC, and by so many RFCs besides it. Some people have tried to change the system in the past, to no avail. The committee seems fine where it is and doesn't want the process to change. 
+
+I'm hopeful, though. PHP has gone through several phases in the past where it had equally little direction or vision. Then there were also phases where the language took leaps forward. I'm thinking about the very early Zend era; then the PHP 7.0 rewrite with Hack was breathing down PHP's neck; and then Nikita who pushed the language forward during the late 7.x and early 8.x years. Recently it feels like we've lost that direction once again, but I'm also hopeful that the right person or entity will come forward eventually.
+
+If that means we can't have generics for the time being, then no worries. Awesome developers will continue to use PHP to build awesome stuff without them.
+
+---
+
+## And how about you?
+
+Would you like to add your point of view here? Feel free to let me know via [email](brendt@stitcher.io) or [Discord](/discord).
