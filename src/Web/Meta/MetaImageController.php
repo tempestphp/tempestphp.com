@@ -7,30 +7,25 @@ namespace App\Web\Meta;
 use App\Web\Blog\BlogRepository;
 use App\Web\Documentation\ChapterRepository;
 use App\Web\Documentation\Version;
-use Spatie\Browsershot\Browsershot;
-use Tempest\Container\Tag;
+use GdImage;
 use Tempest\Core\Kernel;
 use Tempest\Http\Request;
 use Tempest\Http\Response;
 use Tempest\Http\Responses\File;
-use Tempest\Http\Responses\Ok;
+use Tempest\Http\Responses\NotFound;
 use Tempest\Http\Session\VerifyCsrfMiddleware;
 use Tempest\Router\Get;
 use Tempest\Router\SetCurrentUrlMiddleware;
 use Tempest\Router\Stateless;
 use Tempest\View\ViewRenderer;
 
-use function Tempest\Router\uri;
 use function Tempest\support\path;
-use function Tempest\View\view;
 
 final readonly class MetaImageController
 {
     public function __construct(
         private Kernel $kernel,
         private ViewRenderer $viewRenderer,
-        #[Tag('meta')]
-        private Browsershot $browsershot,
     ) {}
 
     #[Stateless, Get('/meta/blog/{slug}')]
@@ -38,10 +33,8 @@ final readonly class MetaImageController
     {
         $post = $repository->find($slug);
 
-        if ($request->has('html')) {
-            $html = $this->viewRenderer->render(view(__DIR__ . '/views/blog.view.php', post: $post));
-
-            return new Ok($html);
+        if ($post === null) {
+            return new NotFound();
         }
 
         $path = path($this->kernel->root, 'public/meta/meta-blog-' . $slug . '.png')->toString();
@@ -51,10 +44,7 @@ final readonly class MetaImageController
         }
 
         if (! is_file($path) || $request->has('nocache')) {
-            $this->browsershot
-                ->windowSize(1200, 628)
-                ->setUrl(uri([self::class, 'blog'], slug: $slug, html: true))
-                ->save($path);
+            $this->saveMetaImage($post->title, $path);
         }
 
         return new File($path);
@@ -66,12 +56,6 @@ final readonly class MetaImageController
         $version = Version::from($version);
         $chapter = $repository->find($version, $category, $slug);
 
-        if ($request->has('html')) {
-            $html = $this->viewRenderer->render(view(__DIR__ . '/views/documentation.view.php', chapter: $chapter));
-
-            return new Ok($html);
-        }
-
         $path = path($this->kernel->root, "public/meta/meta-documentation-{$version->value}-{$category}-{$slug}.png")->toString();
 
         if (! is_dir(dirname($path))) {
@@ -79,10 +63,7 @@ final readonly class MetaImageController
         }
 
         if (! is_file($path) || $request->has('nocache')) {
-            $this->browsershot
-                ->windowSize(1200, 628)
-                ->setUrl(uri([self::class, 'documentation'], version: $version->value, category: $category, slug: $slug, html: true))
-                ->save($path);
+            $this->saveMetaImage($chapter->title, $path);
         }
 
         return new File($path);
@@ -93,12 +74,6 @@ final readonly class MetaImageController
     {
         $type = MetaType::tryFrom($type) ?? MetaType::HOME;
 
-        if ($request->has('html')) {
-            $html = $this->viewRenderer->render(view($type->getViewPath(), title: $request->get('title'), subtitle: $request->get('subtitle')));
-
-            return new Ok($html);
-        }
-
         $path = path($this->kernel->root, 'public/meta/meta-' . $type->value . '.png')->toString();
 
         if (! is_dir(dirname($path))) {
@@ -106,11 +81,92 @@ final readonly class MetaImageController
         }
 
         if (! is_file($path) || $request->has('nocache')) {
-            $this->browsershot
-                ->setUrl(uri([self::class, 'default'], type: $type->value, html: true))
-                ->save($path);
+            $title = (string) ($request->get('title') ?? match ($type) {
+                MetaType::BLOG => 'Blog',
+                MetaType::HOME => 'Tempest',
+            });
+
+            $this->saveMetaImage($title, $path);
         }
 
         return new File($path);
+    }
+
+    private function saveMetaImage(string $title, string $path): void
+    {
+        $image = imagecreatefrompng(__DIR__ . '/tempest-meta.png');
+
+        if (! $image instanceof GdImage) {
+            return;
+        }
+
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+
+        $fontPath = path($this->kernel->root, 'public/fonts/MonaspaceArgon-Bold.woff')->toString();
+        $fontSize = 50;
+        $maxWidth = 980;
+
+        do {
+            $lines = $this->wrapText($title, $fontPath, $fontSize, $maxWidth);
+            $fontSize -= 4;
+        } while (count($lines) > 3 && $fontSize >= 44);
+
+        $fontSize += 4;
+        $lineHeight = $fontSize + 16;
+        $top = (int) round((imagesy($image) - count($lines) * $lineHeight) / 2);
+        $color = imagecolorallocate($image, 19, 25, 46);
+
+        foreach ($lines as $index => $line) {
+            $box = $this->textBox($line, $fontPath, $fontSize);
+            $x = (int) round((imagesx($image) - $box['width']) / 2) - $box['left'];
+            $y = $top + $index * $lineHeight + $box['height'];
+
+            imagettftext($image, $fontSize, 0, $x, $y, $color, $fontPath, $line);
+        }
+
+        imagepng($image, $path);
+    }
+
+    /** @return list<string> */
+    private function wrapText(string $text, string $fontPath, int $fontSize, int $maxWidth): array
+    {
+        $words = preg_split('/\s+/', trim($text)) ?: [];
+        $lines = [];
+        $line = '';
+
+        foreach ($words as $word) {
+            $candidate = $line === '' ? $word : "{$line} {$word}";
+
+            if ($this->textBox($candidate, $fontPath, $fontSize)['width'] <= $maxWidth) {
+                $line = $candidate;
+
+                continue;
+            }
+
+            if ($line !== '') {
+                $lines[] = $line;
+            }
+
+            $line = $word;
+        }
+
+        if ($line !== '') {
+            $lines[] = $line;
+        }
+
+        return $lines;
+    }
+
+    /** @return array{width: int, height: int, left: int} */
+    private function textBox(string $text, string $fontPath, int $fontSize): array
+    {
+        $box = imagettfbbox($fontSize, 0, $fontPath, $text);
+
+        return [
+            'width' => $box[2] - $box[0],
+            'height' => $box[1] - $box[7],
+            'left' => $box[0],
+        ];
     }
 }
