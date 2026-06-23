@@ -299,7 +299,7 @@ pre {
 	}
 
 	& pre {
-		background-color: #ffffffdd;
+		background-color: var(--code-background);
 		border-radius: 3px;
 		display: block;
 		clear:both;
