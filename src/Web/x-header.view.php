@@ -33,7 +33,7 @@ $isBlog = is_current_uri([BlogController::class, 'show']) || is_current_uri([Blo
       </div>
 
       <!-- Center -->
-      <div class="flex items-center gap-4 min-w-0">
+      <div class="flex items-center gap-4 min-w-0 xl:ml-32">
         <x-search />
       </div>
       <!-- Right side -->
