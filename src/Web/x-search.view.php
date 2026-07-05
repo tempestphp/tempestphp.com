@@ -1,14 +1,9 @@
-<button toggle-palette class="hidden sm:block min-w-0 cursor-pointer">
+<button toggle-palette class="hidden sm:flex items-center gap-2 min-w-0 cursor-pointer rounded-lg border border-(--ui-border) bg-(--ui-bg)/50 dark:bg-transparent px-3 py-1.5 text-sm text-(--ui-text-muted) hover:bg-(--ui-bg-elevated) hover:border-(--ui-border-accented) transition group-data-[scrolling]:border-transparent group-data-[scrolling]:bg-transparent group-data-[scrolling]:hover:bg-(--ui-bg-elevated)">
     <label for="search" class="sr-only">Search</label>
-    <div class="flex rounded-xl group-[[data-scrolling]]:bg-(--ui-bg) bg-(--ui-bg)/50 dark:bg-[transparent] text-(--ui-text) hover:bg-(--ui-bg-elevated) ring ring-(--ui-border)/80 transition">
-			<span class="grow px-4 py-2 text-base text-(--ui-text-muted) focus:outline-0 sm:text-sm/6 truncate">
-				Search docs, blog...
-			</span>
-        <div class="flex py-1.5 pr-1.5">
-            <kbd class="inline-flex items-center rounded px-2 text-(--ui-text-dimmed) font-medium">
-                <x-icon name="tabler:command" class="size-4"/>
-                <span class="text-[.95rem]">K</span>
-            </kbd>
-        </div>
-    </div>
+    <x-icon name="tabler:search" class="size-4 shrink-0 text-(--ui-text-dimmed)"/>
+    <span class="truncate">Search docs, blog...</span>
+    <kbd class="ml-2 inline-flex items-center gap-0.5 rounded border border-(--ui-border) bg-(--ui-bg-muted) px-1.5 py-0.5 text-xs text-(--ui-text-dimmed) font-medium">
+        <x-icon name="tabler:command" class="size-3"/>
+        K
+    </kbd>
 </button>
