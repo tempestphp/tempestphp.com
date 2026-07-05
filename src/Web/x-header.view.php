@@ -16,7 +16,7 @@ $isBlog = is_current_uri([BlogController::class, 'show']) || is_current_uri([Blo
       class="group transition-[top,border] z-[1] fixed top-4 data-[scrolling]:top-0 flex justify-center bg-[transparent] border-b border-transparent data-[scrolling]:border-(--ui-border) w-full duration-200 data-[scrolling]:backdrop-blur data-[scrolling]:bg-(--ui-bg)/75"
       id="header"
   >
-    <div class="flex justify-between items-center gap-x-4 px-8 py-4 w-full 2xl:max-w-8xl lg:max-w-5xl xl:max-w-7xl">
+    <div class="grid grid-cols-[auto_1fr_auto] items-center gap-x-4 px-8 py-4 w-full 2xl:max-w-8xl lg:max-w-5xl xl:max-w-7xl">
       <!-- Left side -->
       <div class="flex items-center gap-4">
         <a href="/" class="flex items-center gap-4">
