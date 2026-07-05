@@ -1,4 +1,4 @@
-<button toggle-palette class="hidden sm:flex items-center gap-2 min-w-0 cursor-pointer rounded-lg border border-(--ui-border) bg-(--ui-bg)/50 dark:bg-transparent px-3 py-1.5 text-sm text-(--ui-text-muted) hover:bg-(--ui-bg-elevated) hover:border-(--ui-border-accented) transition group-[[data-scrolling]]:bg-(--ui-bg)">
+<button toggle-palette class="hidden sm:flex items-center gap-2 min-w-0 cursor-pointer rounded-lg border border-(--ui-border) bg-(--ui-bg)/50 dark:bg-transparent px-3 py-1.5 text-sm text-(--ui-text-muted) hover:bg-(--ui-bg-elevated) hover:border-(--ui-border-accented) transition group-data-[scrolling]:border-transparent group-data-[scrolling]:bg-transparent group-data-[scrolling]:hover:bg-(--ui-bg-elevated)">
     <label for="search" class="sr-only">Search</label>
     <x-icon name="tabler:search" class="size-4 shrink-0 text-(--ui-text-dimmed)"/>
     <span class="truncate">Search docs, blog...</span>
