@@ -1,3 +1,7 @@
+- uri: https://github.com/tamdaz/tempest-twig
+  title: Tempest + Twig
+  description: A third-party package that provides Twig functions helpers for Tempest
+  type: Package
 - uri: https://www.juststeveking.com/articles/the-reason-i-love-tempest-for-apis/
   title: The Reason I Love Tempest for APIs
   description: Tempest makes API development feel lightweight by combining typed request objects, attribute-based validation, discovery-driven routing, and built-in mapping with minimal ceremony.
