@@ -1,6 +1,6 @@
 - uri: https://github.com/tamdaz/tempest-twig
   title: Tempest + Twig
-  description: A third-party package that provides Twig functions helpers for Tempest
+  description: A third-party package that provides helper functions and allows creating Twig components for Tempest.
   type: Package
 - uri: https://www.juststeveking.com/articles/the-reason-i-love-tempest-for-apis/
   title: The Reason I Love Tempest for APIs
