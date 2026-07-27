@@ -1,3 +1,7 @@
+- uri: https://blog.ecotone.tech/tempest-ecotone-one-declarative-foundation/
+  title: Tempest + Ecotone
+  description: One Declarative Foundation for event sourcing and CQRS
+  type: Blog
 - uri: https://github.com/tamdaz/tempest-twig
   title: Tempest + Twig
   description: A third-party package that provides helper functions and allows creating Twig components for Tempest.
