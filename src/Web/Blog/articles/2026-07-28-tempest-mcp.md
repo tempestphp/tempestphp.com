@@ -15,10 +15,16 @@ With `tempest/mcp`, a server is a class, while tools, resources and prompts are 
 
 The package is experimental for now, so it isn't covered by Tempest's backwards-compatibility promise yet. We're excited to get it into your hands, learn which use cases you build, and shape the package from real-world feedback.
 
-Install it with Composer:
+Install it as a standalone package with Composer:
 
 ```console
 composer require tempest/mcp
+```
+
+Or require the latest `tempest/framework`:
+
+```console
+composer require tempest/framework:^3.18 
 ```
 
 ## A real use case: an AI-powered support desk
