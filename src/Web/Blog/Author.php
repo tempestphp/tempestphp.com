@@ -25,7 +25,7 @@ enum Author: string
         };
     }
 
-    public function getBluesky(): string
+    public function getBluesky(): ?string
     {
         return match ($this) {
             self::BRENT => 'brendt.bsky.social',
@@ -33,7 +33,7 @@ enum Author: string
         };
     }
 
-    public function getX(): string
+    public function getX(): ?string
     {
         return match ($this) {
             self::BRENT => 'brendt_gd',

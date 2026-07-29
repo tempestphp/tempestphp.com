@@ -14,8 +14,9 @@
         <id>{{ $post->uri }}</id>
         <category term="PHP"/>
         <author>
-            <name>{{ $post->author->getFullName() }}</name>
-            <uri>{{ $post->author->getBluesky() }}</uri>
+            <name>{!! $post->author->getFullName() !!}</name>
+            <uri :if="$post->author->getBluesky()">{{ $post->author->getBluesky() }}</uri>
+            <uri :else="$post->author->getX()">{{ $post->author->getX() }}</uri>
         </author>
         <summary :if="$post->description" type="html"><![CDATA[ {!! $post->description !!} ]]></summary>
         <content type="html"><![CDATA[ {!! $post->content !!} ]]></content>
