@@ -170,7 +170,7 @@ public function ticket(int $id): array
 }
 ```
 
-The first method is registered as a concrete resource. The second becomes a resource template because its URI contains `{id}`. When a client reads `support://tickets/67`, Tempest matches the URI, binds `67` to the `int $id` parameter and calls the method.
+The first method is registered as a concrete resource. The second becomes a resource template because its URI contains `id`. When a client reads `support://tickets/67`, Tempest matches the URI, binds `67` to the `int $id` parameter and calls the method.
 
 That binding uses the same argument machinery as tools. The repository is still injected into the server, a missing ticket still becomes an application error, and the return value is normalized to JSON resource content. We get live application context without writing URI parsing or protocol response code.
 
