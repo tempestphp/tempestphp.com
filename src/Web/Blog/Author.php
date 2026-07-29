@@ -37,6 +37,7 @@ enum Author: string
     {
         return match ($this) {
             self::BRENT => 'brendt_gd',
+            self::MARK => 'notpsychxpath',
             default => null,
         };
     }
