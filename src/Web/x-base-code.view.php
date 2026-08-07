@@ -42,7 +42,7 @@ use App\Web\Meta\MetaType;
     <x-slot name="head"/>
 </head>
 <body class="relative antialiased flex flex-col grow selection:bg-(--ui-primary)/20 selection:text-(--ui-primary) text-(--ui-text) bg-(--ui-bg) scheme-light dark:scheme-dark !overflow-visible !pr-0">
-  <div id="background" class="z-[-1] absolute inset-0 w-full h-full overflow-hidden pointer-events-none" />
+  <div :if="! ($blank ?? false)" id="background" class="z-[-1] absolute inset-0 w-full h-full overflow-hidden pointer-events-none" />
   <x-slot/>
 </body>
 </html>

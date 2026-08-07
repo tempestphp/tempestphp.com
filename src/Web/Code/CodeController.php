@@ -58,8 +58,11 @@ final readonly class CodeController
 
         $clean = $request->has('clean');
 
+        $blank = $request->has('blank');
+
         $editUrl = uri([self::class, 'paste'], lang: $language, code: $code);
         $cleanUrl = uri([self::class, 'preview'], lang: $language, code: $code, center: $center, clean: true);
+        $blankUrl = uri([self::class, 'preview'], lang: $language, code: $code, center: $center, blank: true);
 
         return \Tempest\View\view(__DIR__ . '/code_preview.view.php')
             ->data(
@@ -69,6 +72,8 @@ final readonly class CodeController
                 center: $center,
                 clean: $clean,
                 cleanUrl: $cleanUrl,
+                blank: $blank,
+                blankUrl: $blankUrl,
             );
     }
 }
