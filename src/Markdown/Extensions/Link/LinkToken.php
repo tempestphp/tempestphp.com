@@ -5,6 +5,7 @@ namespace App\Markdown\Extensions\Link;
 use Tempest\Markdown\Parser;
 use Tempest\Markdown\Rules\BoldAndItalicRule;
 use Tempest\Markdown\Rules\BoldRule;
+use Tempest\Markdown\Rules\CodeRule;
 use Tempest\Markdown\Rules\ImageRule;
 use Tempest\Markdown\Rules\ItalicRule;
 use Tempest\Markdown\Rules\StrikethroughRule;
@@ -23,6 +24,7 @@ final class LinkToken implements Token
     {
         $content = $parser
             ->forToken($this, [
+                new CodeRule(),
                 new BoldAndItalicRule(),
                 new BoldRule(),
                 new ItalicRule(),
