@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Link;
 
 use Tempest\Markdown\Parser;
@@ -11,7 +13,6 @@ use Tempest\Markdown\Rules\ItalicRule;
 use Tempest\Markdown\Rules\StrikethroughRule;
 use Tempest\Markdown\Rules\TextRule;
 use Tempest\Markdown\Token;
-use function Tempest\Support\Str\replace;
 
 final class LinkToken implements Token
 {
@@ -42,7 +43,7 @@ final class LinkToken implements Token
             $blank = ' target="_blank" rel="noopener noreferrer"';
         }
 
-        $href= preg_replace('/\.md((?=[\/#?])|$)/', '', $href);
+        $href = preg_replace('/\.md((?=[\/#?])|$)/', '', $href);
 
         return "<a href=\"{$href}\"{$blank}>{$content}</a>";
     }

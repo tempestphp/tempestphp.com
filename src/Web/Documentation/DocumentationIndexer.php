@@ -12,11 +12,11 @@ use Tempest\Markdown\Markdown;
 use Tempest\Support\Arr\ImmutableArray;
 use Tempest\Support\Str\ImmutableString;
 
-use function Tempest\Support\str;
 use function Tempest\Router\uri;
 use function Tempest\Support\arr;
 use function Tempest\Support\Arr\get_by_key;
 use function Tempest\Support\Arr\wrap;
+use function Tempest\Support\str;
 use function Tempest\Support\Str\to_sentence_case;
 
 /**

@@ -70,7 +70,7 @@ final readonly class DocumentationController
             return new NotFound();
         }
 
-        // TODO: support static generation
+        // Markdown responses still need support for static generation.
         if (str_ends_with($slug, needle: '.md')) {
             $markdown = $this->markdownView($version, $category, before_first($slug, '.md'), $chapterRepository);
 

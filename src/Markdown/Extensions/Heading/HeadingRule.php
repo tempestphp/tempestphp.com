@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Heading;
 
 use Tempest\Markdown\Parser;

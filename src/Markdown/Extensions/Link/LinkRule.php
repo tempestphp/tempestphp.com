@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Link;
 
 use Tempest\Markdown\Parser;
@@ -47,7 +49,9 @@ final class LinkRule implements Rule, ProvidesFirstChar, ProvidesStopChar
 
             if ($parser->comesNext('[')) {
                 $bracketDepth += 1;
-            } elseif ($parser->comesNext(']')) {
+            }
+
+            if ($parser->comesNext(']')) {
                 $bracketDepth -= 1;
             }
 

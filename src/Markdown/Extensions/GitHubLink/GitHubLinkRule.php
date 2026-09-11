@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\GitHubLink;
 
 use App\Web\Documentation\Version;
@@ -18,8 +20,7 @@ final class GitHubLinkRule implements Rule, ProvidesStopChar
 
     public function shouldParse(Parser $parser): bool
     {
-        return $parser->comesNext('{b`', length: 3)
-            || $parser->comesNext('{`', length: 2);
+        return $parser->comesNext('{b`', length: 3) || $parser->comesNext('{`', length: 2);
     }
 
     public function parse(Parser $parser): ?Token

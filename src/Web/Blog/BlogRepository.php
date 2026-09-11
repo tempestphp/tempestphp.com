@@ -73,11 +73,11 @@ final readonly class BlogRepository
             ...$content->frontmatter,
         ];
 
-        if (isset($data['tag'])) {
+        if (($data['tag'] ?? null) !== null) {
             $data['tag'] = strtolower($data['tag']);
         }
 
-        if (isset($data['author'])) {
+        if (($data['author'] ?? null) !== null) {
             $data['author'] = strtolower($data['author']);
         }
 

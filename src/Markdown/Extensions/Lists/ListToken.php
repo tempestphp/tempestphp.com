@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Lists;
 
 use App\Markdown\Extensions\GitHubLink\GitHubLinkRule;

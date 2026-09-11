@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Heading;
 
 use Tempest\Markdown\Parser;
@@ -23,7 +25,7 @@ final class HeadingToken implements Token
     {
         $tag = "h{$this->level}";
 
-        $slug = $this->content |> trim(...) |> strtolower(...) |> (fn (string $x) => str_replace(' ', '-', $x));
+        $slug = $this->content |> trim(...) |> strtolower(...) |> (static fn (string $x) => str_replace(' ', '-', $x));
 
         $id = " id=\"{$slug}\"";
 

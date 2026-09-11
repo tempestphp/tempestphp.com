@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown;
 
 use App\Markdown\Extensions\Heading\HeadingRule;
@@ -10,9 +12,9 @@ use Tempest\Container\Initializer;
 use Tempest\Container\Singleton;
 use Tempest\Highlight\Highlighter;
 use Tempest\Markdown\Markdown;
-use Tempest\Markdown\Rules\ParagraphRule as TempestParagraphRule;
-use Tempest\Markdown\Rules\ListRule as TempestListRule;
 use Tempest\Markdown\Rules\HeadingRule as TempestHeadingRule;
+use Tempest\Markdown\Rules\ListRule as TempestListRule;
+use Tempest\Markdown\Rules\ParagraphRule as TempestParagraphRule;
 
 final readonly class MarkdownInitializer implements Initializer
 {

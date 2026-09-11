@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\GitHubLink;
 
 use App\Web\Documentation\Version;
 use Tempest\Markdown\Parser;
 use Tempest\Markdown\Token;
+
 use function Tempest\Support\str;
 use function Tempest\Support\Str\to_kebab_case;
 
@@ -28,20 +31,17 @@ final readonly class GitHubLinkToken implements Token
             ->append('.php')
             ->toString();
 
-        if (str_starts_with($this->content, '#[')) {
-            $text = str($this->content)
-                ->stripStart('#[')
-                ->stripEnd(']')
-                ->stripStart('\\')
-                ->classBasename()
-                ->wrap('#[<span class="hl-type">', '</span>]');
-        } else {
-            $text = str($this->content)
-                ->stripStart('\\')
-                ->classBasename()
-                ->wrap('<span class="hl-type">', '</span>')
-                ->toString();
-        }
+        $isAttribute = str_starts_with($this->content, '#[');
+        $text = str($this->content)
+            ->stripStart('#[')
+            ->stripEnd(']')
+            ->stripStart('\\')
+            ->classBasename()
+            ->wrap(
+                $isAttribute ? '#[<span class="hl-type">' : '<span class="hl-type">',
+                $isAttribute ? '</span>]' : '</span>',
+            )
+            ->toString();
 
         return sprintf(
             '<a href="%s"><code>%s</code></a>',

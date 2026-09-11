@@ -21,7 +21,7 @@ final readonly class AdvocacySyncCommand
     ) {}
 
     #[ConsoleCommand, Schedule(Every::HALF_HOUR)]
-    public function __invoke(bool $sync = true): void // @mage-expect lint:no-boolean-flag-parameter
+    public function __invoke(bool $sync = true): void // @mago-expect lint:no-boolean-flag-parameter
     {
         $messages = $this->reddit->fetch();
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Markdown\Extensions\Paragraph;
 
 use App\Web\Documentation\Version;
