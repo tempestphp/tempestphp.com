@@ -22,12 +22,16 @@
 	--color-leaf-8: var(--color-green-800);
 	--color-leaf-9: var(--color-green-900);
 
-	/* Light rays */
-	--color-ray-1: var(--color-pink-100);
-	--color-ray-2: var(--color-indigo-100);
-	--color-ray-3: var(--color-blue-100);
-	--color-ray-4: var(--color-violet-200);
-	--color-ray-5: var(--color-pink-50);
+	/* Hero glow */
+	--color-glow-1: var(--color-pink-100);
+	--color-glow-2: var(--color-indigo-100);
+	--color-glow-3: var(--color-blue-100);
+	--color-glow-4: var(--color-violet-300);
+	--color-glow-5: var(--color-pink-50);
+
+	/* Page-foot glow — deeper than the hero, so the page closes darker. */
+	--color-glow-deep: var(--color-violet-400);
+	--color-glow-deep-2: var(--color-indigo-300);
 
 	/* Dialog animations */
 	--animate-dialog-open: dialog-open 150ms ease-out;
@@ -116,11 +120,14 @@
 		--ui-border-accented: var(--color-neutral-700);
 		--ui-border-inverted: var(--color-white);
 
-		--color-ray-1: var(--color-pink-900);
-		--color-ray-2: var(--color-indigo-900);
-		--color-ray-3: var(--color-blue-900);
-		--color-ray-4: var(--color-violet-800);
-		--color-ray-5: var(--color-pink-800);
+		--color-glow-1: var(--color-pink-900);
+		--color-glow-2: var(--color-indigo-900);
+		--color-glow-3: var(--color-blue-900);
+		--color-glow-4: var(--color-violet-800);
+		--color-glow-5: var(--color-pink-800);
+
+		--color-glow-deep: var(--color-violet-700);
+		--color-glow-deep-2: var(--color-indigo-800);
 	}
 }
 
@@ -273,40 +280,318 @@ pre {
 
 /*
 |--------------------------------------------------------------------------
+| Hero glow
+|--------------------------------------------------------------------------
+|
+| Static, full-bleed wash behind the hero. Percentage-positioned so it scales
+| to any viewport width instead of being pinned to a fixed pixel band, and
+| masked away towards the bottom so it never collides with the first section.
+*/
+
+.hero-glow {
+	/*
+	| Mobile first. The four centres sit only ~100px apart on a phone, so at
+	| desktop radii they stack into one saturated band across the top of the
+	| screen. Widening the falloff spreads them into a single soft wash, and
+	| the lower opacity keeps the whole thing behind the copy instead of
+	| competing with it. Opacity goes through a variable so the .dark override
+	| below doesn't have to restate the breakpoint — setting `opacity`
+	| directly here would lose to `.dark .hero-glow` on specificity.
+	*/
+	--hero-glow-opacity: 0.45;
+
+	opacity: var(--hero-glow-opacity);
+	background-image:
+		radial-gradient(115% 90% at 12% 5%, var(--color-glow-1), transparent 70%),
+		radial-gradient(105% 90% at 38% 0%, var(--color-glow-4), transparent 70%),
+		radial-gradient(115% 95% at 64% 8%, var(--color-glow-3), transparent 70%),
+		radial-gradient(105% 90% at 90% 0%, var(--color-glow-2), transparent 70%);
+	mask-image: linear-gradient(to bottom, black, black 55%, transparent 95%);
+
+	@media (width >= 40rem) {
+		--hero-glow-opacity: 1;
+
+		background-image:
+			radial-gradient(55% 60% at 12% 5%, var(--color-glow-1), transparent 70%),
+			radial-gradient(50% 60% at 38% 0%, var(--color-glow-4), transparent 70%),
+			radial-gradient(55% 65% at 64% 8%, var(--color-glow-3), transparent 70%),
+			radial-gradient(50% 60% at 90% 0%, var(--color-glow-2), transparent 70%);
+	}
+}
+
+.dark .hero-glow {
+	--hero-glow-opacity: 0.18;
+
+	@media (width >= 40rem) {
+		--hero-glow-opacity: 0.4;
+	}
+}
+
+/*
+| The same wash mirrored at the foot of the page, so the page closes on colour
+| instead of trailing off into flat background. Deeper violet than the hero and
+| masked upward, which is the inverse of .hero-glow.
+*/
+.page-glow {
+	/*
+	| Held right back on phones. The gradient centres are positioned as
+	| percentages, so on a narrow element they bunch together and reinforce
+	| instead of spreading out — the same values that read as a soft wash on a
+	| desktop turn into a solid band across the bottom of a phone screen.
+	| Driven through a variable so the dark override below doesn't have to
+	| restate the breakpoint.
+	*/
+	--page-glow-opacity: 0.35;
+
+	opacity: var(--page-glow-opacity);
+	background-image:
+		radial-gradient(60% 70% at 18% 100%, var(--color-glow-deep-2), transparent 70%),
+		radial-gradient(55% 75% at 52% 108%, var(--color-glow-deep), transparent 70%),
+		radial-gradient(60% 70% at 88% 100%, var(--color-glow-3), transparent 70%);
+	mask-image: linear-gradient(to top, black, black 40%, transparent 92%);
+
+	@media (width >= 40rem) {
+		--page-glow-opacity: 1;
+	}
+}
+
+.dark .page-glow {
+	--page-glow-opacity: 0.15;
+
+	@media (width >= 40rem) {
+		--page-glow-opacity: 0.4;
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
 | Home page code blocks
 |--------------------------------------------------------------------------
 */
 
-.home .home-code-block {
-	& + .home-code-block {
-		margin-top: 1em;
+/*
+| Lets a set of snippets flow into balanced columns, so one tall block sits
+| next to several short ones instead of leaving a hole in a rigid grid.
+*/
+.home-code-columns {
+	& > .home-code-block {
+		break-inside: avoid;
+		margin-bottom: 1rem;
 	}
 
+	@media (width >= 64rem) {
+		columns: 2;
+		column-gap: 1rem;
+	}
+}
+
+/*
+| The homepage sits on a tinted page background (cool blue in light, black
+| under a coloured glow in dark) while the shared code surface is a neutral
+| grey. At the same lightness but a different hue, the blocks read as muddy
+| cut-outs — so tint the surface into the page's own hue family here.
+*/
+.home {
+	--code-background: color-mix(in oklab, var(--ui-bg) 96%, var(--ui-primary));
+	--code-border: color-mix(in oklab, var(--ui-border) 80%, var(--ui-primary));
+}
+
+.dark .home {
+	--code-background: color-mix(in oklab, var(--ui-bg) 91%, var(--ui-primary));
+	--code-border: color-mix(in oklab, var(--ui-border) 75%, var(--ui-primary));
+}
+
+.home .home-code-block {
+	--home-code-radius: 0.75rem;
+
+	/*
+	| Strength of the horizontal scroll affordance. At phone widths nearly
+	| every snippet overflows, so the shadow would be permanently on screen
+	| next to the code — keep it to a hint there and only let it carry real
+	| weight once overflow becomes the exception.
+	*/
+	--code-scroll-shadow: 6%;
+	--code-scroll-shadow-width: 0.55rem;
+
+	display: flex;
+	flex-direction: column;
+	font-size: 0.75rem;
+	min-width: 0;
+
+	@media (width >= 40rem) {
+		font-size: 0.8125rem;
+		--code-scroll-shadow: 22%;
+		--code-scroll-shadow-width: 0.85rem;
+	}
+
+	@media (width >= 64rem) {
+		font-size: 0.875rem;
+	}
+
+	/* Filename / command bar, joined to the block below it. */
 	& .code-title {
-		margin-bottom: 0;
-		margin-left: 1.1em;
-		font-size: 1em;
-		color: var(--ui-text-muted);
-		background: var(--code-border);
-		padding: 0em 0.5em;
 		display: flex;
-		float: left;
-		border-radius: 0.2em 0.2em 0 0;
+		align-items: center;
+		gap: 1ch;
+		margin: 0;
+		padding: 0.5em 2ch;
+		font-size: inherit;
+		line-height: 1.5;
+		color: var(--ui-text-muted);
+		/*
+		| Separated from the block by tinting rather than by going grey:
+		| --ui-primary sits between the two page backgrounds in lightness, so
+		| the same mix darkens the bar in light mode and lifts it in dark.
+		| Kept light on purpose — the bar is meant to be a whisper, and the
+		| border below it carries most of the separation.
+		*/
+		background: color-mix(in oklab, var(--code-background) 95%, var(--ui-primary));
+		border: 1px solid var(--code-border);
+		border-bottom: 0;
+		border-radius: var(--home-code-radius) var(--home-code-radius) 0 0;
+
+		/* Language mark, so a wall of snippets is scannable by shape. */
+		&::before {
+			content: "";
+			flex: none;
+			width: 1.15em;
+			height: 1.15em;
+			background: currentColor;
+			opacity: 0.75;
+			mask: var(--code-title-icon) center / contain no-repeat;
+		}
 
 		& + pre {
 			margin-top: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
 		}
 	}
 
+	/*
+	| The path is context, the filename is the point — so the directory recedes
+	| and the basename reads at full strength. Wrapped server side by
+	| HomeController so there is no flash of unstyled path.
+	*/
+	& .code-title-dir {
+		opacity: 0.6;
+	}
+
+	& .code-title-name {
+		color: var(--ui-text);
+	}
+
+	/* Copy lives in the header's dead space, revealed on hover or focus. */
+	& .code-title-copy {
+		display: flex;
+		flex: none;
+		align-items: center;
+		justify-content: center;
+		margin-left: auto;
+		padding: 0.15em;
+		border-radius: 0.35em;
+		color: var(--ui-text-dimmed);
+		cursor: pointer;
+		opacity: 0;
+		transition:
+			opacity 150ms,
+			color 150ms,
+			background-color 150ms;
+
+		& svg {
+			width: 1.15em;
+			height: 1.15em;
+		}
+
+		&:hover {
+			color: var(--ui-text-highlighted);
+			background: color-mix(in oklab, var(--ui-text) 10%, transparent);
+		}
+
+		&:focus-visible {
+			opacity: 1;
+			outline: 2px solid var(--ui-primary);
+			outline-offset: 1px;
+		}
+	}
+
+	&:hover .code-title-copy {
+		opacity: 1;
+	}
+
+	& .code-title-copy[data-copied] {
+		opacity: 1;
+		color: var(--ui-success);
+	}
+
+	/* Touch devices get no hover, so never hide the control there. */
+	@media (hover: none) {
+		& .code-title-copy {
+			opacity: 1;
+		}
+	}
+
+	/* Headerless snippets have no bar to sit in, so the button floats. */
+	&:has(> .code-floating-copy) {
+		position: relative;
+	}
+
+	& .code-floating-copy {
+		position: absolute;
+		top: 0.5em;
+		right: 0.5em;
+		margin-left: 0;
+		background: var(--code-background);
+	}
+}
+
+/*
+| Language marks. Keyed off the highlighter's language class on <pre>, so a
+| block picks up the right icon without any extra markup.
+*/
+.home .home-code-block {
+	--code-title-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3v4a1 1 0 0 0 1 1h4'/%3E%3Cpath d='M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2'/%3E%3C/svg%3E");
+
+	&:has(pre.language-php) {
+		--code-title-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 3v4a1 1 0 0 0 1 1h4'/%3E%3Cpath d='M5 12V5a2 2 0 0 1 2-2h7l5 5v4'/%3E%3Cpath d='M5 18l2 2l2-2'/%3E%3Cpath d='M13 18l2 2l2-2'/%3E%3C/svg%3E");
+	}
+
+	&:has(pre.language-html) {
+		--code-title-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 8l-4 4l4 4'/%3E%3Cpath d='M17 8l4 4l-4 4'/%3E%3Cpath d='M14 4l-4 16'/%3E%3C/svg%3E");
+	}
+
+	&:has(pre.language-console) {
+		--code-title-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 9l3 3l-3 3'/%3E%3Cpath d='M13 15h3'/%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3C/svg%3E");
+	}
+
 	& pre {
-		background-color: var(--code-background);
-		border-radius: 3px;
 		display: block;
-		clear:both;
+		margin: 0;
 		padding: 1em 2ch;
-		box-shadow: 0 0 15px 5px var(--ui-border);
-		overflow-x: auto;
+		border: 1px solid var(--code-border);
+		border-radius: var(--home-code-radius);
 		line-height: 1.8em;
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+
+		/*
+		| Scroll affordance. The cover layer is anchored to the content, the
+		| shadow to the element, so the shadow only shows while there is more
+		| code off to the right. The cover is opaque well past the shadow's
+		| width, otherwise the two blend into a permanent grey band.
+		*/
+		background-color: var(--code-background);
+		background-image:
+			linear-gradient(to left, var(--code-background) 65%, transparent),
+			linear-gradient(
+				to left,
+				color-mix(in oklab, var(--ui-text) var(--code-scroll-shadow), transparent),
+				transparent
+			);
+		background-position: right center;
+		background-repeat: no-repeat;
+		background-size: 2.5rem 100%, var(--code-scroll-shadow-width) 100%;
+		background-attachment: local, scroll;
 	}
 }
 

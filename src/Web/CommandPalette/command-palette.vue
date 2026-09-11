@@ -19,6 +19,54 @@ const query = ref<string>('')
 const { results } = useSearch({ query, open })
 
 registerPalette({ value: open })
+
+/**
+ * Reka's listbox stops at either end of the results, so arrowing past the last
+ * item does nothing. This wraps around instead.
+ *
+ * It runs on the capture phase of an ancestor, which is what lets it get in
+ * ahead of the listener Reka puts on the input itself. Rather than reaching
+ * into the library's highlight state, it re-issues the keystroke as Home or
+ * End — those already map to Reka's "first" and "last" focus intents, so the
+ * jump, the scroll-into-view and the ARIA bookkeeping all stay its job.
+ */
+function wrapArrowNavigation(event: KeyboardEvent) {
+	if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') {
+		return
+	}
+
+	const container = event.currentTarget as HTMLElement
+	// Matches how Reka builds its own collection, disabled entries and all.
+	const items = [...container.querySelectorAll<HTMLElement>('[role="option"]:not([data-disabled])')]
+
+	if (items.length < 2) {
+		return
+	}
+
+	const index = items.findIndex((item) => item.hasAttribute('data-highlighted'))
+
+	if (index === -1) {
+		return
+	}
+
+	const wrapsToFirst = event.key === 'ArrowDown' && index === items.length - 1
+	const wrapsToLast = event.key === 'ArrowUp' && index === 0
+
+	if (!wrapsToFirst && !wrapsToLast) {
+		return
+	}
+
+	event.preventDefault()
+	event.stopPropagation()
+
+	event.target?.dispatchEvent(
+		new KeyboardEvent('keydown', {
+			key: wrapsToFirst ? 'Home' : 'End',
+			bubbles: true,
+			cancelable: true,
+		}),
+	)
+}
 </script>
 
 <template>
@@ -32,6 +80,7 @@ registerPalette({ value: open })
 			:ignore-filter="true"
 			:reset-search-term-on-blur="false"
 			:reset-search-term-on-select="false"
+			@keydown.capture="wrapArrowNavigation"
 		>
 			<!-- Search -->
 			<combobox-input

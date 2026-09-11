@@ -7,8 +7,8 @@ final readonly class FetchBookCommand
         private Console $console,
     ) {}
     
-    #[ConsoleCommand(description: 'Synchronize a book from ISBN by its title')]
-    public function __invoke(string $title, bool $force = false): void 
+    #[ConsoleCommand(description: 'Sync a book by title')]
+    public function __invoke(string $title, bool $force = false): void
     {
         $data = $this->isbn->findByTitle($title);
 
