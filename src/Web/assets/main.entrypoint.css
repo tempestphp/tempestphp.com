@@ -574,24 +574,7 @@ pre {
 		overflow-x: auto;
 		overscroll-behavior-x: contain;
 
-		/*
-		| Scroll affordance. The cover layer is anchored to the content, the
-		| shadow to the element, so the shadow only shows while there is more
-		| code off to the right. The cover is opaque well past the shadow's
-		| width, otherwise the two blend into a permanent grey band.
-		*/
 		background-color: var(--code-background);
-		background-image:
-			linear-gradient(to left, var(--code-background) 65%, transparent),
-			linear-gradient(
-				to left,
-				color-mix(in oklab, var(--ui-text) var(--code-scroll-shadow), transparent),
-				transparent
-			);
-		background-position: right center;
-		background-repeat: no-repeat;
-		background-size: 2.5rem 100%, var(--code-scroll-shadow-width) 100%;
-		background-attachment: local, scroll;
 	}
 }
 
