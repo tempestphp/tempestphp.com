@@ -14,7 +14,7 @@ use function Tempest\Router\uri;
          inside stays on the same container as every section below it. -->
     <!-- Capped so the hero doesn't strand its content in the middle of a very
          tall viewport; on a typical laptop this is just 100svh. -->
-    <section class="relative flex flex-col justify-center min-h-[min(100svh,56rem)] py-24">
+    <section class="relative flex flex-col justify-center min-h-[min(100svh,56rem)] pt-24">
       <div class="hero-glow z-[-1] absolute inset-0 overflow-hidden pointer-events-none"></div>
       <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] items-center gap-10 lg:gap-16">
         <!-- Copy -->
@@ -24,19 +24,16 @@ use function Tempest\Router\uri;
             <span class="text-(--ui-primary)">gets out of your way</span>
           </h1>
           <p class="mt-5 lg:mt-7 max-w-xl text-lg md:text-xl lg:text-2xl text-(--ui-text-toned) leading-snug">
-            With zero configuration and zero boilerplate, Tempest gives you the architectural freedom to focus entirely on your business logic.
+            Focus on code that matters and brings value for the modern web. That's what Tempest is about.
           </p>
-          <div class="flex flex-wrap items-center gap-2 mt-7 lg:mt-9 font-medium">
-            <a :href="uri([DocumentationController::class, 'index'])" class="bg-(--ui-bg-inverted) text-(--ui-bg) hover:bg-(--ui-bg-inverted)/90 rounded-xl px-5 py-2.5 transition">
-              Get started
-            </a>
-            <a href="https://github.com/tempestphp/tempest-framework" class="flex items-center gap-x-2 rounded-xl px-4 py-2.5 text-(--ui-text) ring ring-inset ring-(--ui-border) hover:bg-(--ui-bg-elevated) transition">
-              <x-icon name="tabler:brand-github" class="size-5"/>
-              <span>Star on GitHub</span>
-            </a>
-          </div>
-          <div class="mt-6 lg:mt-8 max-w-full">
-            <x-install-command/>
+          <div class="mt-6 lg:mt-8 max-w-full flex flex-col xl:flex-row gap-4 items-start xl:items-center">
+                <x-install-command/>
+              <a
+                  :href="uri([DocumentationController::class, 'index'])"
+                  class="bg-(--ui-bg-inverted) text-(--ui-bg) hover:bg-(--ui-bg-inverted)/90 rounded-xl px-5 py-3 transition flex gap-2 items-center"
+              >
+                  <span class="grow whitespace-nowrap">Get started</span>
+              </a>
           </div>
           <!-- Proof -->
           <ul class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-6 lg:mt-8 font-mono text-sm text-(--ui-text-dimmed)">
@@ -52,10 +49,6 @@ use function Tempest\Router\uri;
               <x-icon name="tabler:brand-php" class="size-4"/>
               <span>PHP 8.5+</span>
             </li>
-            <li class="flex items-center gap-x-1.5">
-              <x-icon name="tabler:license" class="size-4"/>
-              <span>MIT</span>
-            </li>
           </ul>
         </div>
         <!-- Code -->
@@ -65,7 +58,7 @@ use function Tempest\Router\uri;
           </div>
         </div>
       </div>
-      <div class="bottom-0 absolute inset-x-0 hidden lg:flex justify-center items-center mb-10 p-8">
+      <div class="bottom-0 absolute inset-x-0 hidden lg:flex justify-center items-center p-8">
         <a
           id="scroll-indicator"
           href="#features"
@@ -100,7 +93,7 @@ use function Tempest\Router\uri;
           'Tempest reimagines templating in PHP with a clean front-end engine, inspired by modern front-end frameworks.',
           'Whether you love our modern syntax or prefer the battle-tested reliability of Blade and Twig, Tempest has you covered.',
         ]"
-        link-label="Read more about the template engine"
+        link-label="Read about tempest/view"
         :link-uri="uri(DocumentationController::class, version: Version::default(), category: 'essentials', slug: 'views')"
         :snippets="['templating-view']"
       ></x-home-section>
@@ -124,14 +117,14 @@ use function Tempest\Router\uri;
           'Console commands are automatically discovered and use PHP’s type system to define arguments and flags.',
           'No need to search the documentation to remember the syntax, just write PHP.',
         ]"
-        link-label="Read more about console commands"
+        link-label="Learn about console commands"
         :link-uri="uri(DocumentationController::class, version: Version::default(), category: 'essentials', slug: 'console-commands')"
         :snippets="['console']"
       ></x-home-section>
     </div>
 
     <!-- Everything else -->
-    <section class="px-6 py-12 lg:py-20 tracking-tighter">
+    <section class="px-6 md:py-12 lg:py-20 tracking-tighter">
       <div class="max-w-2xl">
         <h2 class="text-2xl md:text-3xl lg:text-4xl leading-tight text-(--ui-text-highlighted)">
           And much, much more.
